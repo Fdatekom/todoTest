@@ -1,0 +1,28 @@
+.todoElement {
+    margin-left: 35%;
+    margin-right: 35%;
+    width: 30%;
+    border: 2px solid red;
+    padding: 4px;
+    margin-top: 4px;
+    flex-wrap: nowrap;
+    overflow: hidden;
+}
+.toggle{
+    opacity: 0;
+  
+}
+
+.inp2 {
+    z-index: 1;
+    position: relative left;
+    left: 0;
+    size: 80%;
+}
+.todoElement div {
+    float: left;
+}
+.inp3{
+    outline:none;
+    border: none;
+}
