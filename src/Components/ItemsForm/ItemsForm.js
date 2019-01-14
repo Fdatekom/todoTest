@@ -4,22 +4,19 @@ import React, {Component} from 'react';
 export default class ItemsForm extends Component {
     constructor(props){
         super(props);
-
         this.state = {
             text: '',
-            id: '',
 
         }
     };
 
-    hendlerPropertyChange = (propetyName)=> (event) =>{
+    hendlerPropertyChange=(event)=> {
         this.setState({
-            [propetyName]: event.target.value 
+            text: event.target.value 
         })
-
     }
 
-    handleSendClick = (propetyName)=>(event) => {
+    handleSendClick = (event) => {
         const { onSend } = this.props;
         
             if(typeof onSend === 'function' && this.state.text.length >=1) {
@@ -31,16 +28,17 @@ export default class ItemsForm extends Component {
         
         event.preventDefault();
       }
-    
+    ;
     render(){
         const {text} = this.state;
         let id=1;
 
         return (
             <form>
-                Text: <input type='text' onChange={this.hendlerPropertyChange('text')} value={text} placeholder='What needs to be done?' autoFocus /><br/>
-                <button onClick={this.handleSendClick(id)}>Send</button>
+                Text: <input type='text' onChange={this.hendlerPropertyChange} value={text} placeholder='What needs to be done?' autoFocus /><br/>
+                <button onClick={this.handleSendClick}>Send</button>
             </form>
         );
     }
+    
 }
