@@ -13,7 +13,7 @@ export default class Items extends Component {
     render() {
         const items= this.props.items;
         return(<div >
-            {items.map((item, idx)=> <ToDoItem text={item.text} id={idx} idx={idx} onChange={this.props.onChange}/>)}
+            {items.map((item, idx)=> <ToDoItem text={item.text} id={item.id} idx={idx} onChange={this.props.onChange}/>)}
             </div>)
 
 }

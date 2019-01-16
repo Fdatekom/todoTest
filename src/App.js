@@ -3,14 +3,12 @@ import './App.css';
 import Items from './Components/Items/Items.js';
 import ItemsForm from './Components/ItemsForm/ItemsForm.js';
 
-function сhangeElement(array, action){
-  return array.map((item, index) => {
-    if (index !== action.index) {
+function updateArrayItem(array, action){
+  return array.map((item) => {
+    if (item.id !== action.id) {
       return item
-    } else {
-     return "Поменялось" }
-
-    
+    } else if(item.id == action.id) {
+     return ({text: action.text, id: action.id}) }   
   })
 };
 
@@ -20,7 +18,8 @@ class App extends Component {
     super(props);
 
     this.state= {
-      text: [],
+      text: [
+        ],
     }
   }
   
@@ -36,10 +35,11 @@ class App extends Component {
 
   onChange=(lastText, id)=>{
     const text=this.state.text;
-    const newText= сhangeElement(text, {index: id, text: lastText})
-    console.log(сhangeElement(text, {index: id, text: lastText}))
+    console.log(text)
+    const newTodo= updateArrayItem(text, {id: id, text: lastText})
+    console.log(updateArrayItem(text, {id: id, text: lastText}))
     this.setState({
-      text: newText
+      text: newTodo
     })
   }
 
