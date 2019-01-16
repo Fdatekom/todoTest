@@ -5,7 +5,8 @@ export default class Items extends Component {
     constructor(props){
         super(props);
         this.state = {
-            text: ''
+            text: '',
+            sendText: 'Send'
         }
     }
 
@@ -17,16 +18,15 @@ export default class Items extends Component {
      console.log(propetyName)
     }
     
-    hendlePropetryFocus=(event)=>{
-        event.target.setAttribute("value", this.state.text )
-
+    onChange = (id)=>(event)=>{
+        event.target.remove();
+        event.targe.innerHTML()
     }
 
     render() {
         const {items} = this.props;
-
         return(<div >
-            {items.map((item, idx) => <li key={idx} id={idx}><input  type="checkbox"/><input onFocus={this.hendlePropetryFocus} onChange={this.hendlePropertyChange('text')} value={item.text}/></li>)}
+            {items.map((item, idx) => <li key={idx} id={idx}><input  type="checkbox"/><div > {item.text} </div></li>)}
             </div>)
 
 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Items from './Components/Items/Items.js';
 import ItemsForm from './Components/ItemsForm/ItemsForm.js';
+import ToDoItem from './Components/ToDoItem/ToDoItem.js';
 
 class App extends Component {
   constructor(props){
@@ -9,8 +10,7 @@ class App extends Component {
 
     this.state= {
       text: [],
-      newText: '',
-      value: 'asd'
+      newText: 'asd'
     }
   }
 
@@ -29,7 +29,7 @@ class App extends Component {
       
       <div>
       <ItemsForm onSend={this.handleSend}/>
-
+      <ToDoItem text={this.state.newText} />
       <Items items={ text } onSend={this.hendleChangeSend}/>
       </div>
     );

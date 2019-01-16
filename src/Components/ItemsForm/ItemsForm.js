@@ -31,7 +31,6 @@ export default class ItemsForm extends Component {
     ;
     render(){
         const {text} = this.state;
-        let id=1;
 
         return (
             <form>
