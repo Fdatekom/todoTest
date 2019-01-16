@@ -10,7 +10,7 @@ class App extends Component {
 
     this.state= {
       text: [],
-      newText: 'asd'
+      newText: 'asd',
     }
   }
 
@@ -24,12 +24,12 @@ class App extends Component {
 
 
   render() {
-    const { text} = this.state;
+    const { text, newText} = this.state;
     return (
       
       <div>
       <ItemsForm onSend={this.handleSend}/>
-      <ToDoItem text={this.state.newText} />
+      <ToDoItem text={ newText} id={9} />
       <Items items={ text } onSend={this.hendleChangeSend}/>
       </div>
     );
