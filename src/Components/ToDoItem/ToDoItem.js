@@ -4,9 +4,8 @@ export default class ToDoItem extends Component {
     constructor(props){
         super(props);
         this.state ={
-            ifEdit: false,
-            text: this.props.text,
-            id: this.props.id,
+            isEdit: false,
+            newText: ''
 
         }
     }
@@ -20,33 +19,39 @@ export default class ToDoItem extends Component {
 
     hendlerPropertyChange=(event)=> {
         this.setState({
-            text: event.target.value 
+            newText: event.target.value 
         })
     }
 
     onDoubleClick =(event)=>{
-        const {ifEdit} = this.state;
+        const {isEdit} = this.state.isEdit;
+        const {text} = this.props;
         this.setState({
-            ifEdit: !ifEdit
+            isEdit: !isEdit,
+            newText: text,
         })
     }
 
     onKeyDown=(event)=>{
-        if(event.keyCode === 13){
-            const {ifEdit} = this.state;
+        const  onChange = this.props.onChange;
+
+        if(event.keyCode === 13 && typeof onChange === 'function' && this.state.newText.length >=1){
+            const {isEdit} = this.state;
             this.setState({
-                ifEdit: !ifEdit
-         })
+                isEdit: !isEdit
+            });
+            onChange(this.state.newText, event.target.id);
+            this.setState({ newText: ''});
         }
+
     }
 
     render( ) { 
-        const {text}=this.state;
-        const { id } =this.state;
-        console.log(id)
+        const {text, id, idx}=this.props;
+        const {newText} = this.state;
         return(
             <div >
-                {this.state.ifEdit ? <input id={id} onKeyDown={this.onKeyDown} value={text} onChange={this.hendlerPropertyChange} autoFocus/> :  <div id={id} onDoubleClick={this.onDoubleClick}> {text} <button>Delete</button></div>}
+                {this.state.isEdit ? <input id={id} key={idx} onKeyDown={this.onKeyDown} value={newText} onChange={this.hendlerPropertyChange} autoFocus/> :  <div id={id} key={idx} onDoubleClick={this.onDoubleClick}> {text} <button onClick={this.onRemove}>Delete</button></div>}
             </div>
         )
         

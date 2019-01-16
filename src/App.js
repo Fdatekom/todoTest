@@ -2,7 +2,18 @@ import React, { Component } from 'react';
 import './App.css';
 import Items from './Components/Items/Items.js';
 import ItemsForm from './Components/ItemsForm/ItemsForm.js';
-import ToDoItem from './Components/ToDoItem/ToDoItem.js';
+
+function сhangeElement(array, action){
+  return array.map((item, index) => {
+    if (index !== action.index) {
+      return item
+    } else {
+     return "Поменялось" }
+
+    
+  })
+};
+
 
 class App extends Component {
   constructor(props){
@@ -10,9 +21,10 @@ class App extends Component {
 
     this.state= {
       text: [],
-      newText: 'asd',
     }
   }
+  
+
 
   handleSend=(todo)=>{
     const {text} = this.state;
@@ -22,15 +34,22 @@ class App extends Component {
     })
   }
 
+  onChange=(lastText, id)=>{
+    const text=this.state.text;
+    const newText= сhangeElement(text, {index: id, text: lastText})
+    console.log(сhangeElement(text, {index: id, text: lastText}))
+    this.setState({
+      text: newText
+    })
+  }
 
   render() {
-    const { text, newText} = this.state;
+    const { text } = this.state;
     return (
       
       <div>
       <ItemsForm onSend={this.handleSend}/>
-      <ToDoItem text={ newText} id={9} />
-      <Items items={ text } onSend={this.hendleChangeSend}/>
+      <Items items={ text } onSend={this.hendleChangeSend} onChange={this.onChange}/>
       </div>
     );
   }
