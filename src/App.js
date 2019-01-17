@@ -8,7 +8,7 @@ function updateArrayItem (array, action) {
     if (item.id !== action.id) {
       return item
     } else if (item.id === action.id) {
-      return { text: action.text, id: action.id }
+      return { text: action.text, id: action.id, isAchived: item.isAchived }
     }
   })
 }
