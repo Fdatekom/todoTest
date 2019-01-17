@@ -18,6 +18,15 @@ function removeArrayItem (array, id) {
     return item.id !== id
   })
 }
+function achievedArrayItem(array, action ){
+  return array.map(item=>{
+    if(item.id !== action.id){
+      return item 
+    } else if(item.id===action.id){
+      return {text: item.text, id: item.id,  isAchived: !action.isAchived,}
+    }
+  })
+}
 
 class App extends Component {
   constructor (props) {
@@ -42,11 +51,22 @@ class App extends Component {
     this.setState({
       todos: todos.concat([todo])
     })
+
   }
 
   onChange = (lastText, id) => {
     const todos = this.state.todos
     const newTodo = updateArrayItem(todos, { id: id, text: lastText })
+    this.setState({
+      todos: newTodo
+    })
+    console.log(this.state.todos)
+  }
+
+  onAchived=(id, isAchived)=> {
+    const todos = this.state.todos
+    const newTodo = achievedArrayItem(todos, {id: id, isAchived: isAchived})
+    console.log(newTodo)
     this.setState({
       todos: newTodo
     })
@@ -61,6 +81,7 @@ class App extends Component {
           items={todos}
           onChange={this.onChange}
           onRemove={this.onRemove}
+          onAchieved={this.onAchived}
         />
       </div>
     )

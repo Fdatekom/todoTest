@@ -7,7 +7,8 @@ export default class ItemsForm extends Component {
     super(props)
     this.state = {
       text: '',
-      id: 'todo' + nanoid()
+      id: 'todo' + nanoid(),
+      isAchieved: false
     }
   }
 
@@ -26,7 +27,6 @@ export default class ItemsForm extends Component {
 
       this.setState({ text: '', id: idName })
     }
-
     event.preventDefault()
   }
 

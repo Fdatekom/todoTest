@@ -16,9 +16,11 @@ export default class Items extends Component {
           <ToDoItem
             text={item.text}
             id={item.id}
+            isAchieved = {item.isAchieved}
             key={idx}
             onChange={this.props.onChange}
             onRemove={this.props.onRemove}
+            onAchieved={this.props.onAchieved}
           />
         ))}
       </div>

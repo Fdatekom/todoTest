@@ -53,22 +53,23 @@ export default class ToDoItem extends Component {
   }
 
   checkboxChange = event => {
-    if (this.state.isAchieved) {
-      this.setState({
-        isAchieved: !this.state.isAchieved,
-        className: 'achived'
-      })
-    } else {
-      this.setState({
-        isAchieved: !this.state.isAchieved,
-        className: 'notAchived'
-      })
+    const onAchived = this.props.onAchieved
+    if(typeof onAchived === 'function'){
+        onAchived(this.props.id, this.props.isAchieved)
+        if (!this.props.isAchieved) {
+            this.setState({
+              className: 'achived'
+            })
+          } else {
+            this.setState({
+              className: 'notAchived'
+            })
+          }
     }
   }
 
   render () {
     const { text, id, idx } = this.props
-    console.log(text)
     const { newText } = this.state
     return (
       <div>
