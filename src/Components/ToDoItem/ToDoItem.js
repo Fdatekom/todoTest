@@ -5,7 +5,9 @@ export default class ToDoItem extends Component {
     super(props)
     this.state = {
       isEdit: false,
-      newText: ''
+      newText: '',
+      isAchieved: true,
+      className: 'notAchived'
     }
   }
 
@@ -18,10 +20,12 @@ export default class ToDoItem extends Component {
   onDoubleClick = event => {
     const { isEdit } = this.state.isEdit
     const { text } = this.props
-    this.setState({
-      isEdit: !isEdit,
-      newText: text
-    })
+    if (this.state.isAchieved) {
+      this.setState({
+        isEdit: !isEdit,
+        newText: text
+      })
+    }
   }
 
   onKeyDown = event => {
@@ -48,6 +52,20 @@ export default class ToDoItem extends Component {
     }
   }
 
+  checkboxChange = event => {
+    if (this.state.isAchieved) {
+      this.setState({
+        isAchieved: !this.state.isAchieved,
+        className: 'achived'
+      })
+    } else {
+      this.setState({
+        isAchieved: !this.state.isAchieved,
+        className: 'notAchived'
+      })
+    }
+  }
+
   render () {
     const { text, id, idx } = this.props
     console.log(text)
@@ -64,8 +82,17 @@ export default class ToDoItem extends Component {
             autoFocus
           />
         ) : (
-          <div id={id} key={idx} onDoubleClick={this.onDoubleClick}>
-            {' '}
+          <div
+            id={id}
+            key={idx}
+            onDoubleClick={this.onDoubleClick}
+            className={this.state.className}
+          >
+            <input
+              type='checkbox'
+              className='notAchieved'
+              onChange={this.checkboxChange}
+            />{' '}
             {text}{' '}
             <button onClick={() => this.props.onRemove(id)}>Delete</button>
           </div>
