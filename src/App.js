@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import './App.css'
-import Items from './Components/Items/Items.js'
 import ItemsForm from './Components/ItemsForm/ItemsForm.js'
+import TodoActive from './Components/TodoActiv/TodoActiv.js'
 
 function updateArrayItem (array, action) {
   return array.map(item => {
     if (item.id !== action.id) {
       return item
     } else if (item.id === action.id) {
-      return { text: action.text, id: action.id, isAchived: item.isAchived }
+      return {text: action.text, id: item.id,  isAchived: item.isAchived}
     }
   })
 }
@@ -23,8 +23,23 @@ function achievedArrayItem(array, action ){
     if(item.id !== action.id){
       return item 
     } else if(item.id===action.id){
-      return {text: item.text, id: item.id,  isAchived: !action.isAchived,}
+      return {text: item.text, id: item.id,  isAchieved: !action.isAchieved}
     }
+  })
+}
+
+function activeArrayTodo(array, propertyName) {
+  return array.filter(item=>{
+    if(propertyName ===  'todos'){
+      return item
+    } else if (propertyName === 'activTodo') {
+      return item.isAchieved === false
+    } else if (propertyName === 'complitedTodo') {
+      return item.isAchieved !== false
+    } else {
+      console.log(propertyName)
+    }
+  
   })
 }
 
@@ -33,7 +48,9 @@ class App extends Component {
     super(props)
 
     this.state = {
-      todos: []
+      todos: [],
+      activTodo: [],
+      complitedTodo: [],
     }
   }
 
@@ -63,25 +80,44 @@ class App extends Component {
     console.log(this.state.todos)
   }
 
-  onAchived=(id, isAchived)=> {
+  onAchieved=(id, isAchieved)=> {
     const todos = this.state.todos
-    const newTodo = achievedArrayItem(todos, {id: id, isAchived: isAchived})
+    const newTodo = achievedArrayItem(todos, {id: id, isAchieved: isAchieved})
     console.log(newTodo)
     this.setState({
       todos: newTodo
     })
   }
+  
+  onActive = propertyName => {
+    const todos = this.state.todos;
+    const newTodo = activeArrayTodo(todos, propertyName)
+    this.setState({
+      [propertyName]: newTodo
+    })
+    console.log(newTodo)
+    console.log(this.state)
+  }
 
   render () {
-    const { todos } = this.state
+    const { todos, activTodo, complitedTodo } = this.state
     return (
       <div>
         <ItemsForm onAdd={this.handleAdd} />
-        <Items
+        {/* <Items
           items={todos}
           onChange={this.onChange}
           onRemove={this.onRemove}
           onAchieved={this.onAchived}
+        /> */}
+        <TodoActive 
+          items={todos}
+          itemsActive={activTodo}
+          itemsCompleted={complitedTodo}
+          onChange={this.onChange}
+          onRemove={this.onRemove}
+          onAchieved={this.onAchieved}
+          onActive={this.onActive}
         />
       </div>
     )

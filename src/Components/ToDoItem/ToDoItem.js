@@ -42,8 +42,12 @@ export default class ToDoItem extends Component {
       })
       onChange(this.state.newText, event.target.id)
       this.setState({ newText: '' })
+    } else {
+        console.log(typeof onChange)
+        console.log(event.keyCode)
+        
     }
-  }
+  } 
 
   onClickRemove = (event, id) => {
     const { onRemove } = this.props
@@ -53,13 +57,14 @@ export default class ToDoItem extends Component {
   }
 
   checkboxChange = event => {
-    const onAchived = this.props.onAchieved
-    if(typeof onAchived === 'function'){
-        onAchived(this.props.id, this.props.isAchieved)
+    const onAchieved = this.props.onAchieved
+    if(typeof onAchieved === 'function'){
+        onAchieved(this.props.id, this.props.isAchieved)
         if (!this.props.isAchieved) {
             this.setState({
               className: 'achived'
             })
+            
           } else {
             this.setState({
               className: 'notAchived'
@@ -69,7 +74,7 @@ export default class ToDoItem extends Component {
   }
 
   render () {
-    const { text, id, idx } = this.props
+    const { text, id, idx, isAchieved } = this.props
     const { newText } = this.state
     return (
       <div>
@@ -82,7 +87,7 @@ export default class ToDoItem extends Component {
             onChange={this.hendlerPropertyChange}
             autoFocus
           />
-        ) : (
+        ) :(isAchieved) ?  (
           <div
             id={id}
             key={idx}
@@ -93,11 +98,26 @@ export default class ToDoItem extends Component {
               type='checkbox'
               className='notAchieved'
               onChange={this.checkboxChange}
+              checked
             />{' '}
             {text}{' '}
             <button onClick={() => this.props.onRemove(id)}>Delete</button>
           </div>
-        )}
+        ) : (<div
+            id={id}
+            key={idx}
+            onDoubleClick={this.onDoubleClick}
+            className={this.state.className}
+          >
+            <input
+              type='checkbox'
+              className='notAchieved'
+              onChange={this.checkboxChange}
+              
+            />{' '}
+            {text}{' '}
+            <button onClick={() => this.props.onRemove(id)}>Delete</button>
+          </div>)}
       </div>
     )
   }
