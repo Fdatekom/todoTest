@@ -46,14 +46,24 @@ export default class ToDoItem extends Component {
 
     }
 
-    render( ) { 
+    onClickRemove=(event, id)=> {
+        const { onRemove } = this.props
+        if (typeof onRemove === 'function') {
+            onRemove(id)
+        }
+    }
+
+        
+        
+      
+    render () { 
         const {text, id, idx}=this.props;
         const {newText} = this.state;
         return(
             <div >
-                {this.state.isEdit ? <input id={id} key={idx} onKeyDown={this.onKeyDown} value={newText} onChange={this.hendlerPropertyChange} autoFocus/> :  <div id={id} key={idx} onDoubleClick={this.onDoubleClick}> {text} <button onClick={this.onRemove}>Delete</button></div>}
+                {this.state.isEdit ? <input id={id} key={idx} onKeyDown={this.onKeyDown} value={newText} onChange={this.hendlerPropertyChange} autoFocus/> :  <div id={id} key={idx} onDoubleClick={this.onDoubleClick}> {text} <button onClick={()=>this.props.onRemove(id)} >Delete</button></div>}
             </div>
         )
         
-    }
+        }
 }

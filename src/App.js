@@ -7,11 +7,17 @@ function updateArrayItem(array, action){
   return array.map((item) => {
     if (item.id !== action.id) {
       return item
-    } else if(item.id == action.id) {
+    } else if(item.id === action.id) {
      return ({text: action.text, id: action.id}) }   
   })
 };
 
+function removeArrayItem(array, id){
+  return array.filter((item)=>{
+    return item.id !==id
+  })
+
+}
 
 class App extends Component {
   constructor(props){
@@ -23,7 +29,15 @@ class App extends Component {
     }
   }
   
+  onRemove=(  id )=>{
+    const {text} =this.state;
+    const newText=removeArrayItem(text, id )
+    this.setState({
+      text: newText
+    })
 
+    
+  }
 
   handleSend=(todo)=>{
     const {text} = this.state;
@@ -35,9 +49,7 @@ class App extends Component {
 
   onChange=(lastText, id)=>{
     const text=this.state.text;
-    console.log(text)
     const newTodo= updateArrayItem(text, {id: id, text: lastText})
-    console.log(updateArrayItem(text, {id: id, text: lastText}))
     this.setState({
       text: newTodo
     })
@@ -49,7 +61,7 @@ class App extends Component {
       
       <div>
       <ItemsForm onSend={this.handleSend}/>
-      <Items items={ text } onSend={this.hendleChangeSend} onChange={this.onChange}/>
+      <Items items={ text } onSend={this.hendleChangeSend} onChange={this.onChange} onRemove={this.onRemove}/>
       </div>
     );
   }
