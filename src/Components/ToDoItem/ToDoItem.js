@@ -6,7 +6,6 @@ export default class ToDoItem extends Component {
     this.state = {
       isEdit: false,
       newText: '',
-      isAchieved: true,
       className: 'notAchived'
     }
   }
@@ -43,8 +42,6 @@ export default class ToDoItem extends Component {
       onChange(this.state.newText, event.target.id)
       this.setState({ newText: '' })
     } else {
-        console.log(typeof onChange)
-        console.log(event.keyCode)
         
     }
   } 
@@ -74,8 +71,9 @@ export default class ToDoItem extends Component {
   }
 
   render () {
-    const { text, id, idx, isAchieved } = this.props
+    const { text, id, idx } = this.props
     const { newText } = this.state
+    console.log(this.props.isAchieved)
     return (
       <div>
         {this.state.isEdit ? (
@@ -87,7 +85,7 @@ export default class ToDoItem extends Component {
             onChange={this.hendlerPropertyChange}
             autoFocus
           />
-        ) :(isAchieved) ?  (
+        ) :  (
           <div
             id={id}
             key={idx}
@@ -98,26 +96,12 @@ export default class ToDoItem extends Component {
               type='checkbox'
               className='notAchieved'
               onChange={this.checkboxChange}
-              checked
+              checked={this.props.isAchieved}
             />{' '}
             {text}{' '}
             <button onClick={() => this.props.onRemove(id)}>Delete</button>
           </div>
-        ) : (<div
-            id={id}
-            key={idx}
-            onDoubleClick={this.onDoubleClick}
-            className={this.state.className}
-          >
-            <input
-              type='checkbox'
-              className='notAchieved'
-              onChange={this.checkboxChange}
-              
-            />{' '}
-            {text}{' '}
-            <button onClick={() => this.props.onRemove(id)}>Delete</button>
-          </div>)}
+        ) }
       </div>
     )
   }

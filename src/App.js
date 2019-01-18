@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './App.css'
 import ItemsForm from './Components/ItemsForm/ItemsForm.js'
 import TodoActive from './Components/TodoActiv/TodoActiv.js'
+import Items from './Components/Items/Items';
 
 function updateArrayItem (array, action) {
   return array.map(item => {
@@ -28,20 +29,6 @@ function achievedArrayItem(array, action ){
   })
 }
 
-function activeArrayTodo(array, propertyName) {
-  return array.filter(item=>{
-    if(propertyName ===  'todos'){
-      return item
-    } else if (propertyName === 'activTodo') {
-      return item.isAchieved === false
-    } else if (propertyName === 'complitedTodo') {
-      return item.isAchieved !== false
-    } else {
-      console.log(propertyName)
-    }
-  
-  })
-}
 
 class App extends Component {
   constructor (props) {
@@ -49,8 +36,7 @@ class App extends Component {
 
     this.state = {
       todos: [],
-      activTodo: [],
-      complitedTodo: [],
+      active: 'all'
     }
   }
 
@@ -77,48 +63,44 @@ class App extends Component {
     this.setState({
       todos: newTodo
     })
-    console.log(this.state.todos)
   }
 
   onAchieved=(id, isAchieved)=> {
     const todos = this.state.todos
     const newTodo = achievedArrayItem(todos, {id: id, isAchieved: isAchieved})
-    console.log(newTodo)
     this.setState({
       todos: newTodo
     })
   }
   
   onActive = propertyName => {
-    const todos = this.state.todos;
-    const newTodo = activeArrayTodo(todos, propertyName)
     this.setState({
-      [propertyName]: newTodo
+      active: propertyName
     })
-    console.log(newTodo)
-    console.log(this.state)
+    console.log(this.state.active)
   }
 
   render () {
-    const { todos, activTodo, complitedTodo } = this.state
+    const { todos } = this.state
+    console.log(this.state)
     return (
       <div>
         <ItemsForm onAdd={this.handleAdd} />
-        {/* <Items
-          items={todos}
-          onChange={this.onChange}
-          onRemove={this.onRemove}
-          onAchieved={this.onAchived}
-        /> */}
-        <TodoActive 
-          items={todos}
-          itemsActive={activTodo}
-          itemsCompleted={complitedTodo}
+         <Items
+          items={todos.filter((item) => {
+            if(this.state.active === 'all'){
+              return item
+            } else if(this.state.active === 'active' && item.isAchieved===false){
+              return item
+            } else if(this.state.active === 'complited' && item.isAchieved === true){
+              return item
+            }
+          })}
           onChange={this.onChange}
           onRemove={this.onRemove}
           onAchieved={this.onAchieved}
-          onActive={this.onActive}
         />
+        <TodoActive onActive={this.onActive} /> 
       </div>
     )
   }

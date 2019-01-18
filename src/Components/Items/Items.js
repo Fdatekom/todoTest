@@ -10,7 +10,6 @@ export default class Items extends Component {
 
   render () {
     const items = this.props.items
-    console.log(items)
     return (
       <div>
         {items.map((item, idx) => (
