@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import Items from '../Items/Items'
-
+import './TodoActiv.css'
 export default class TodoActiv extends Component {
   constructor (props) {
     super(props)
@@ -20,10 +19,11 @@ export default class TodoActiv extends Component {
 
   render () {
     return (
-      <div>
+      <div className='TodoActive'>
         <button onClick={this.onActiveAll('all')}>All</button>
         <button onClick={this.onActiveAll('active')}>Active</button>
-        <button onClick={this.onActiveAll('complited')}>Compited</button>
+        <button onClick={this.onActiveAll('complited')}>Compited</button> <br />
+        <button onClick={this.props.onRemove}>Del All Complited</button>
       </div>
     )
   }

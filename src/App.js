@@ -2,14 +2,14 @@ import React, { Component } from 'react'
 import './App.css'
 import ItemsForm from './Components/ItemsForm/ItemsForm.js'
 import TodoActive from './Components/TodoActiv/TodoActiv.js'
-import Items from './Components/Items/Items';
+import Items from './Components/Items/Items'
 
 function updateArrayItem (array, action) {
   return array.map(item => {
     if (item.id !== action.id) {
       return item
     } else if (item.id === action.id) {
-      return {text: action.text, id: item.id,  isAchived: item.isAchived}
+      return { text: action.text, id: item.id, isAchived: item.isAchived }
     }
   })
 }
@@ -19,17 +19,20 @@ function removeArrayItem (array, id) {
     return item.id !== id
   })
 }
-function achievedArrayItem(array, action ){
-  return array.map(item=>{
-    if(item.id !== action.id){
-      return item 
-    } else if(item.id===action.id){
-      return {text: item.text, id: item.id,  isAchieved: !action.isAchieved}
+function achievedArrayItem (array, action) {
+  return array.map(item => {
+    if (item.id !== action.id) {
+      return item
+    } else if (item.id === action.id) {
+      return { text: item.text, id: item.id, isAchieved: !action.isAchieved }
     }
   })
 }
-
-
+function removeAchievidItems(array){
+  return array.filter(item=> {
+    return item.isAchieved === false
+  })
+}
 class App extends Component {
   constructor (props) {
     super(props)
@@ -54,7 +57,6 @@ class App extends Component {
     this.setState({
       todos: todos.concat([todo])
     })
-
   }
 
   onChange = (lastText, id) => {
@@ -65,34 +67,42 @@ class App extends Component {
     })
   }
 
-  onAchieved=(id, isAchieved)=> {
+  onAchieved = (id, isAchieved) => {
     const todos = this.state.todos
-    const newTodo = achievedArrayItem(todos, {id: id, isAchieved: isAchieved})
+    const newTodo = achievedArrayItem(todos, { id: id, isAchieved: isAchieved })
     this.setState({
       todos: newTodo
     })
   }
-  
+
   onActive = propertyName => {
     this.setState({
       active: propertyName
     })
-    console.log(this.state.active)
   }
-
+  onRemoveAchieved =(event) =>{
+    const todos =this.state.todos
+    const newTodo = removeAchievidItems(todos)
+    this.setState({todos: newTodo})
+  }
   render () {
     const { todos } = this.state
-    console.log(this.state)
     return (
       <div>
         <ItemsForm onAdd={this.handleAdd} />
-         <Items
-          items={todos.filter((item) => {
-            if(this.state.active === 'all'){
+        <Items
+          items={todos.filter(item => {
+            if (this.state.active === 'all') {
               return item
-            } else if(this.state.active === 'active' && item.isAchieved===false){
+            } else if (
+              this.state.active === 'active' &&
+              item.isAchieved === false
+            ) {
               return item
-            } else if(this.state.active === 'complited' && item.isAchieved === true){
+            } else if (
+              this.state.active === 'complited' &&
+              item.isAchieved === true
+            ) {
               return item
             }
           })}
@@ -100,7 +110,7 @@ class App extends Component {
           onRemove={this.onRemove}
           onAchieved={this.onAchieved}
         />
-        <TodoActive onActive={this.onActive} /> 
+        <TodoActive onActive={this.onActive} onRemove={this.onRemoveAchieved}/>
       </div>
     )
   }

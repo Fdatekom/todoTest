@@ -34,6 +34,7 @@ export default class ItemsForm extends Component {
     const { text } = this.state
     return (
       <form>
+        
         Text:{' '}
         <input
           type='text'
@@ -43,7 +44,7 @@ export default class ItemsForm extends Component {
           autoFocus
         />
         <br />
-        <button onClick={this.handleAddClick}>Send</button>
+        <button className='buttonClass_1' onClick={this.handleAddClick}>Send</button>
       </form>
     )
   }

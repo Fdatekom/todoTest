@@ -1,18 +1,16 @@
 
 form {
-      text-align: center;
-    
-    }
-/* 
-.todoElement {
-        margin-left: 35%;
-        margin-right: 35%;
-        width: 10%;
-        border: 9px red;
-        text-align: center;
-        
-    }
-.toggle{
-        left: 0;
-    }
-         */
+    margin: auto;
+    text-align: center;
+    background-color: aqua;
+    width: 400px;
+}
+
+form input {
+    background-color: aqua;
+}
+
+.buttonClass_1 {
+    border: none;
+    background-color: aqua;
+}

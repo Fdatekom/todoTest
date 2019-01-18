@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import './ToDoItem.css'
 
 export default class ToDoItem extends Component {
   constructor (props) {
@@ -19,7 +20,8 @@ export default class ToDoItem extends Component {
   onDoubleClick = event => {
     const { isEdit } = this.state.isEdit
     const { text } = this.props
-    if (this.state.isAchieved) {
+    console.log(this.state.isEdit)
+    if (!this.props.isAchieved) {
       this.setState({
         isEdit: !isEdit,
         newText: text
@@ -57,16 +59,7 @@ export default class ToDoItem extends Component {
     const onAchieved = this.props.onAchieved
     if(typeof onAchieved === 'function'){
         onAchieved(this.props.id, this.props.isAchieved)
-        if (!this.props.isAchieved) {
-            this.setState({
-              className: 'achived'
-            })
-            
-          } else {
-            this.setState({
-              className: 'notAchived'
-            })
-          }
+       
     }
   }
 
@@ -75,7 +68,7 @@ export default class ToDoItem extends Component {
     const { newText } = this.state
     console.log(this.props.isAchieved)
     return (
-      <div>
+      <div className="todo_Items">
         {this.state.isEdit ? (
           <input
             id={id}
@@ -90,16 +83,16 @@ export default class ToDoItem extends Component {
             id={id}
             key={idx}
             onDoubleClick={this.onDoubleClick}
-            className={this.state.className}
+            className={this.props.isAchieved? ('achived'):('notAchived')}
           >
             <input
               type='checkbox'
-              className='notAchieved'
+              className='checkbox_item'
               onChange={this.checkboxChange}
               checked={this.props.isAchieved}
             />{' '}
             {text}{' '}
-            <button onClick={() => this.props.onRemove(id)}>Delete</button>
+            <button onClick={() => this.props.onRemove(id)}>Del</button>
           </div>
         ) }
       </div>

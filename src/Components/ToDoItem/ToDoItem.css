@@ -1,0 +1,26 @@
+.todo_Items {
+    text-align: center;
+    background-color: bisque;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    overflow: hidden;
+    width: 400px;
+}
+.todo_Items input {
+    text-align: center
+}
+.checkbox_item {
+    float: left;
+    
+}
+.todo_Items button {
+    border: none;
+    margin-right:  10px;
+    float: right;
+}
+.achived {
+    text-decoration: line-through
+}
+
